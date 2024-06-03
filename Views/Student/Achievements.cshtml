@@ -1,0 +1,55 @@
+@model IEnumerable<Achievement>
+
+@{
+    ViewData["Title"] = "Личные достижения";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="get" asp-action="Achievements">
+    <div class="form-group">
+        <input type="date" name="StartDate" class="form-control" placeholder="Начальная дата" />
+        <input type="date" name="EndDate" class="form-control" placeholder="Конечная дата" />
+        <select name="Type" class="form-control">
+            <option value="">Все виды</option>
+            <option value="Учеба">Учеба</option>
+            <option value="Спорт">Спорт</option>
+            <option value="Наука">Наука</option>
+        </select>
+    </div>
+        <button type="submit" class="btn btn-primary">Фильтровать</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Вид</th>
+            <th>Описание</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>@item.Date.ToShortDateString()</td>
+                    <td>
+                    @if (item.Type == "Учеба")
+                    {
+                                <span class="badge badge-primary">@item.Type</span>
+                    }
+                    else if (item.Type == "Спорт")
+                    {
+                                <span class="badge badge-success">@item.Type</span>
+                    }
+                    else if (item.Type == "Наука")
+                    {
+                                <span class="badge badge-info">@item.Type</span>
+                    }
+                    </td>
+                    <td>@item.Description</td>
+                </tr>
+        }
+    </tbody>
+</table>
+
